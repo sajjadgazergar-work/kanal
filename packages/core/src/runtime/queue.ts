@@ -71,7 +71,7 @@ export async function dequeueJobs(
       LIMIT ${opts.limit ?? 1})
     RETURNING *;
   `);
-  return rows as unknown as JobRow[];
+  return rows.rows as unknown as JobRow[];
 }
 
 /** Mark a job done (delete or move to done). */
