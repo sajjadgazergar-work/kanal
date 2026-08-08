@@ -1,14 +1,12 @@
 -- KANAL initial schema, mirroring plan §6.2.
 -- Postgres 16. Run with: psql -d kanal -f 0000_init.sql
--- Requires extensions: pg_uuidv7, pg_trgm, vector
+-- Requires extensions: pg_trgm, vector (pg_uuidv7 not needed — gen_random_uuid is built in)
 
-CREATE EXTENSION IF NOT EXISTS pg_uuidv7;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE EXTENSION IF NOT EXISTS vector;
-
 -- 1 ---------------------------------------------------------------
 CREATE TABLE org (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name            text NOT NULL,
   ui_locale       text NOT NULL DEFAULT 'en'      CHECK (ui_locale IN ('en','fa')),
   timezone        text NOT NULL DEFAULT 'UTC',
@@ -25,7 +23,7 @@ CREATE TABLE org (
 CREATE TYPE platform_kind AS ENUM ('telegram','bale','rubika','eitaa','x','reddit');
 
 CREATE TABLE channel (
-  id                    uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                    uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id                uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   platform              platform_kind NOT NULL,
   platform_channel_id   text NOT NULL,
@@ -55,7 +53,7 @@ CREATE TYPE source_kind AS ENUM
    'hn_algolia','arxiv','webhook','manual');
 
 CREATE TABLE source (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   kind            source_kind NOT NULL,
   url             text,
@@ -76,7 +74,7 @@ CREATE TABLE source (
 
 -- 4 ---------------------------------------------------------------
 CREATE TABLE source_item (
-  id                uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id            uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   source_id         uuid NOT NULL REFERENCES source(id) ON DELETE CASCADE,
   canonical_url     text NOT NULL,
@@ -110,7 +108,7 @@ CREATE TYPE run_state AS ENUM (
   'escalated','blocked_policy','blocked_budget','blocked_provider','halted','cancelled','failed');
 
 CREATE TABLE run (
-  id                 uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                 uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id             uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id         uuid NOT NULL REFERENCES channel(id) ON DELETE CASCADE,
   lane               text NOT NULL CHECK (lane IN ('auto','copilot','manual')),
@@ -135,7 +133,7 @@ CREATE INDEX run_active_idx ON run (org_id, channel_id, state)
 
 -- 6 ---------------------------------------------------------------
 CREATE TABLE run_step (
-  id             uuid PRIMARY KEY DEFAULT uuidv7(),
+  id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id         uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   run_id         uuid NOT NULL REFERENCES run(id) ON DELETE CASCADE,
   stage          text NOT NULL,
@@ -186,7 +184,7 @@ CREATE INDEX job_ready_idx ON job (queue, run_at) WHERE state = 'ready';
 
 -- 7 ---------------------------------------------------------------
 CREATE TABLE post (
-  id                 uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                 uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id             uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id         uuid NOT NULL REFERENCES channel(id) ON DELETE CASCADE,
   run_id             uuid NOT NULL REFERENCES run(id) ON DELETE CASCADE,
@@ -205,7 +203,7 @@ CREATE INDEX post_due_idx ON post (channel_id, scheduled_for)
 
 -- 8 ---------------------------------------------------------------
 CREATE TABLE post_revision (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   post_id         uuid NOT NULL REFERENCES post(id) ON DELETE CASCADE,
   revision_no     integer NOT NULL,
@@ -227,7 +225,7 @@ CREATE TABLE post_revision (
 
 -- 9 ---------------------------------------------------------------
 CREATE TABLE approval (
-  id                 uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                 uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id             uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   run_id             uuid NOT NULL REFERENCES run(id) ON DELETE CASCADE,
   gate               text NOT NULL CHECK (gate IN
@@ -254,7 +252,7 @@ CREATE INDEX approval_sla_idx ON approval (sla_deadline) WHERE state = 'pending'
 -- HTTP action or the signed autopublish policy evaluator — never by an agent
 -- (§7.2 D2). ops.publish consumes a false->consumed intent per run.
 CREATE TABLE publish_intent (
-  id            uuid PRIMARY KEY DEFAULT uuidv7(),
+  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id        uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   run_id        uuid NOT NULL REFERENCES run(id) ON DELETE CASCADE,
   post_id       uuid NOT NULL REFERENCES post(id) ON DELETE CASCADE,
@@ -271,7 +269,7 @@ CREATE INDEX publish_intent_open_idx ON publish_intent (run_id) WHERE consumed =
 
 -- 10 --------------------------------------------------------------
 CREATE TABLE publish_attempt (
-  id                  uuid PRIMARY KEY DEFAULT uuidv7(),
+  id                  uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id              uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   post_id             uuid NOT NULL REFERENCES post(id) ON DELETE CASCADE,
   revision_id         uuid NOT NULL REFERENCES post_revision(id),
@@ -297,7 +295,7 @@ CREATE INDEX publish_attempt_uncertain_idx ON publish_attempt (channel_id)
 
 -- Secondary tables (plan §6.3) --------------------------------------
 CREATE TABLE claim (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   source_item_id  uuid NOT NULL REFERENCES source_item(id) ON DELETE CASCADE,
   text            text NOT NULL,
@@ -308,7 +306,7 @@ CREATE TABLE claim (
 );
 
 CREATE TABLE provider (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   label           text NOT NULL,
   dialect         text NOT NULL,
@@ -329,7 +327,7 @@ CREATE TABLE provider (
 );
 
 CREATE TABLE model (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   provider_id     uuid NOT NULL REFERENCES provider(id) ON DELETE CASCADE,
   model_ref       text NOT NULL,
@@ -340,7 +338,7 @@ CREATE TABLE model (
 );
 
 CREATE TABLE model_price (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   model_ref       text NOT NULL,
   input_usd_per_mtok numeric(10,4) NOT NULL,
@@ -351,7 +349,7 @@ CREATE TABLE model_price (
 );
 
 CREATE TABLE cost_ledger (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   run_id          uuid NOT NULL REFERENCES run(id) ON DELETE CASCADE,
   step_id         uuid REFERENCES run_step(id),
@@ -365,7 +363,7 @@ CREATE TABLE cost_ledger (
 );
 
 CREATE TABLE agent_manifest (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   manifest_id     text NOT NULL,
   semver          text NOT NULL,
@@ -376,7 +374,7 @@ CREATE TABLE agent_manifest (
 );
 
 CREATE TABLE prompt_pack (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   pack_id         text NOT NULL,
   semver          text NOT NULL,
@@ -387,7 +385,7 @@ CREATE TABLE prompt_pack (
 );
 
 CREATE TABLE voice_pack (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id      uuid REFERENCES channel(id) ON DELETE CASCADE,
   semver          text NOT NULL,
@@ -397,7 +395,7 @@ CREATE TABLE voice_pack (
 );
 
 CREATE TABLE policy (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   kind            text NOT NULL,
   name            text NOT NULL,
@@ -410,7 +408,7 @@ CREATE TABLE policy (
 );
 
 CREATE TABLE source_binding (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id      uuid NOT NULL REFERENCES channel(id) ON DELETE CASCADE,
   source_id       uuid NOT NULL REFERENCES source(id) ON DELETE CASCADE,
@@ -421,7 +419,7 @@ CREATE TABLE source_binding (
 );
 
 CREATE TABLE metric_snapshot (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   publish_attempt_id uuid NOT NULL REFERENCES publish_attempt(id) ON DELETE CASCADE,
   captured_at     timestamptz NOT NULL,
@@ -431,7 +429,7 @@ CREATE TABLE metric_snapshot (
 );
 
 CREATE TABLE audit_event (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   prev_hash       bytea,
   actor           text NOT NULL,
@@ -444,7 +442,7 @@ CREATE TABLE audit_event (
 );
 
 CREATE TABLE experiment (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id      uuid NOT NULL REFERENCES channel(id) ON DELETE CASCADE,
   hypothesis      text NOT NULL,
@@ -457,7 +455,7 @@ CREATE TABLE experiment (
 );
 
 CREATE TABLE mtproto_session (
-  id              uuid PRIMARY KEY DEFAULT uuidv7(),
+  id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   org_id          uuid NOT NULL REFERENCES org(id) ON DELETE CASCADE,
   channel_id      uuid NOT NULL REFERENCES channel(id) ON DELETE CASCADE,
   session_blob_ciphertext text NOT NULL,

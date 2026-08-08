@@ -37,10 +37,10 @@ export const uuidv7 = customType<{ data: string; driverData: string }>({
 });
 
 /**
- * Primary-key column: the DB generates the uuidv7 via `DEFAULT uuidv7()` (see
- * migrations/0000_init.sql), so inserts never need to supply an id.
+ * Primary-key column: the DB generates the uuid via `DEFAULT gen_random_uuid()`
+ * (built into PG16 — no pg_uuidv7 extension needed), so inserts never supply an id.
  */
-export const id = () => uuidv7('id').primaryKey().default(sql`uuidv7()`);
+export const id = () => uuidv7('id').primaryKey().default(sql`gen_random_uuid()`);
 
 export const runStateEnum = pgEnum('run_state', [
   'intake', 'briefed', 'sourcing', 'researched', 'authoring', 'drafting', 'critiquing',
