@@ -14,9 +14,11 @@ COPY apps/web/package.json apps/web/package.json
 COPY packages packages
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# copy sources + build web
+# copy sources + build web (build workspace deps first via turbo)
 COPY apps apps
+COPY packages packages
 COPY packs packs
+RUN pnpm run build
 RUN cd apps/web && pnpm build
 
 # runtime

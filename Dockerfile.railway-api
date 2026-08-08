@@ -15,10 +15,10 @@ COPY apps/web/package.json apps/web/package.json
 COPY packages packages
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# copy sources + build
+# copy sources + build (turbo handles workspace dependency order)
 COPY apps apps
 COPY packs packs
-RUN pnpm --filter @kanal/api --filter @kanal/worker run build
+RUN pnpm run build
 
 # runtime
 FROM node:22-alpine
