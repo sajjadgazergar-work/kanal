@@ -1,0 +1,37 @@
+# KANAL API — Railway-compatible build (no BuildKit cache mounts)
+# Builder: RAILPACK with dockerfilePath=Dockerfile.railway-api
+
+FROM node:22-alpine AS base
+ENV PNPM_HOME=/pnpm PATH="$PNPM_HOME:$PATH" COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+RUN corepack enable && corepack prepare pnpm@9.15.9 --activate
+WORKDIR /app
+
+# deps: copy manifests + lockfile, install once
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json tsconfig.base.json ./
+COPY apps/api/package.json apps/api/package.json
+COPY apps/worker/package.json apps/worker/package.json
+COPY packages/contracts/package.json packages/contracts/package.json
+COPY packages/core/package.json packages/core/package.json
+COPY packages/db/package.json packages/db/package.json
+COPY packages/adapters/core/package.json packages/adapters/core/package.json
+COPY packages/adapters/telegram/package.json packages/adapters/telegram/package.json
+COPY packages/providers/package.json packages/providers/package.json
+COPY packages/prompts/package.json packages/prompts/package.json
+COPY packages/sources/package.json packages/sources/package.json
+COPY packages/otel/package.json packages/otel/package.json
+COPY packages/safety/package.json packages/safety/package.json
+RUN pnpm install --frozen-lockfile --ignore-scripts
+
+# copy sources + build
+COPY apps apps
+COPY packages packages
+COPY packs packs
+RUN pnpm --filter @kanal/api --filter @kanal/worker run build
+
+# runtime
+FROM node:22-alpine
+ENV NODE_ENV=production
+WORKDIR /app
+COPY --from=0 /app /app
+EXPOSE 8080
+CMD ["node", "--enable-source-maps", "apps/api/dist/index.js"]
