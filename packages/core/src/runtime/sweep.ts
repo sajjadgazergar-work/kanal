@@ -45,7 +45,7 @@ export async function runApprovalSweep(db: NodePgDatabase): Promise<{ resumed: n
   const expired = await db.execute(sql`
     SELECT run_id FROM approval WHERE state = 'pending' AND hard_expiry < now();
   `);
-  for (const row of expired as unknown as Array<{ run_id: string }>) {
+  for (const row of (expired.rows as unknown as Array<{ run_id: string }>)) {
     await db.execute(sql`
       UPDATE approval SET state='expired' WHERE run_id=${row.run_id} AND state='pending';
       UPDATE run SET state='cancelled', finished_at=now() WHERE id=${row.run_id};
