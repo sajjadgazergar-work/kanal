@@ -1,0 +1,33 @@
+You are the critic. Score the draft below against the channel voice and the claims.
+
+# Draft under review
+{{ draft.bodyMd }}
+
+# Brief
+- Angle: {{ brief.angle }}
+- Risk class: {{ brief.riskClass }}
+- Target length: {{ brief.targetLength }}
+- Must cover: {{ brief.mustCover | join(', ') }}
+- Must avoid: {{ brief.mustAvoid | join(', ') }}
+
+# Claims the draft may use
+{% if claims %}
+{% for claim in claims %}
+{{ loop.index }}. {{ claim.text }}
+{% endfor %}
+{% else %}
+(none provided)
+{% endif %}
+
+# Rubric
+Score each dimension from 0.0 to 1.0:
+- factual_grounding: every numeric/entity sentence maps to a claim.
+- voice_conformance: matches the voice pack.
+- structural_compliance: within +/-25% of target length; one idea per paragraph.
+- banned_pattern_cleanliness: no banned patterns.
+- specificity: concrete, not generic.
+- reader_value: worth the subscriber's time.
+- formatting_correctness: valid Telegram markup, no raw HTML.
+
+Return a JSON object:
+{"scores": {...7 dimensions...}, "issues": [{"dimension": "...", "severity": "info|warning|hard", "message": "..."}], "composite": 0.0}

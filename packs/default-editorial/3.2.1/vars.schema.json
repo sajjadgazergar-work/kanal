@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "default-editorial 3.2.1 variable namespace",
+  "description": "The exact variables templates in this pack may reference. The renderer rejects any undeclared variable as a load-time error.",
+  "properties": {
+    "brief": {
+      "type": "object",
+      "properties": {
+        "angle": { "type": "string" },
+        "audience": { "type": "string" },
+        "riskClass": { "type": "number" },
+        "targetLength": { "type": "number" },
+        "mustCover": { "type": "array", "items": { "type": "string" } },
+        "mustAvoid": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["angle", "audience", "riskClass", "targetLength", "mustCover", "mustAvoid"]
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "sourceItemId": { "type": "string" },
+          "text": { "type": "string", "maxLength": 320 },
+          "charSpan": {
+            "type": "object",
+            "properties": {
+              "start": { "type": "number" },
+              "end": { "type": "number" }
+            }
+          },
+          "confidence": { "type": "number" },
+          "isQuote": { "type": "boolean" },
+          "sourceUrl": { "type": "string" },
+          "sourceName": { "type": "string" }
+        },
+        "required": ["id", "sourceItemId", "text"]
+      }
+    },
+    "voice": {
+      "type": "object",
+      "description": "The channel voice pack (plan §15.1). Rendered as structured JSON."
+    },
+    "recentPosts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "draft": {
+      "type": "object",
+      "description": "A prior draft, used by critic/rubric and reviser templates.",
+      "properties": {
+        "bodyMd": { "type": "string" },
+        "claimMap": { "type": "object" },
+        "allowedUrls": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "critique": {
+      "type": "object",
+      "description": "A prior critique, used by reviser templates.",
+      "properties": {
+        "scores": { "type": "object" },
+        "issues": { "type": "array" },
+        "composite": { "type": "number" }
+      }
+    },
+    "loop": {
+      "type": "object",
+      "description": "Built-in loop metadata (index, index0, first, last, length)."
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@kanal/evals",
+  "version": "0.1.0",
+  "description": "KANAL eval harness: 7-dimension rubric, deterministic scorers, quote budget, judge calibration, golden sets, regression runner.",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test:unit": "vitest run",
+    "test": "vitest run",
+    "eval:run": "node dist/eval-run.js"
+  },
+  "dependencies": {
+    "@kanal/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "locale": "fa",
+  "description": "Persian golden set — 3 good, 3 flawed posts for judge calibration and deterministic regression (plan §15.2).",
+  "items": [
+    {
+      "id": "fa-good-1",
+      "label": "good",
+      "post": {
+        "bodyMd": "> مصرف برق این تراشه نسبت به نسل قبل ۴۰ درصد کاهش یافته است.\n> — رایان‌تک (https://rayantek.example/controller)\n\nرایان‌تک روز سه‌شنبه تراشه جدیدش را معرفی کرد. پهنای باند حافظه آن ۱٫۲ ترابایت بر ثانیه است و با فناوری ۲ نانومتر ساخته شده. این قطعه برای رک‌های هوش مصنوعی طراحی شده است.\n\nبرگه مشخصات امروز منتشر شد. یک آزمایشگاه مستقل اعداد را بررسی کرده است. نمونه‌های اولیه از مارس در اختیار سه مشتری است و مستندات باز، ادعاها را راستی‌آزمایی‌پذیر می‌کند.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000101"],
+          "2": ["00000000-0000-0000-0000-000000000101"],
+          "3": ["00000000-0000-0000-0000-000000000101"],
+          "4": ["00000000-0000-0000-0000-000000000101"],
+          "5": ["00000000-0000-0000-0000-000000000101"]
+        },
+        "allowedUrls": ["https://rayantek.example/controller"]
+      },
+      "brief": {
+        "angle": "کنترلر جدید رایان‌تک پهنای باند حافظه را دو برابر می‌کند",
+        "audience": "مهندسان هوش مصنوعی و مدیران دیتاسنتر",
+        "riskClass": 1,
+        "targetLength": 500,
+        "mustCover": ["پهنای باند", "مصرف برق", "برگه مشخصات"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000101"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000101"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000101"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000101"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 5, "claimIds": ["00000000-0000-0000-0000-000000000101"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000101",
+          "bodyText": "شرکت رایان‌تک روز سه‌شنبه کنترلر جدیدی را با پهنای باند حافظه ۱٫۲ ترابایت بر ثانیه در فناوری ۲ نانومتر رونمایی کرد. مصرف برق این تراشه نسبت به نسل قبل ۴۰ درصد کاهش یافته است. برگه مشخصات فنی امروز منتشر شد و ارقام آن توسط یک آزمایشگاه مستقل تأیید شده است."
+        }
+      ]
+    },
+    {
+      "id": "fa-good-2",
+      "label": "good",
+      "post": {
+        "bodyMd": "سازمان تنظیم مقررات روز دوشنبه مجوز اتصال به شبکه را صادر کرد. این مزرعه خورشیدی تا سال ۲۰۳۰ ظرفیت شبکه را ۴۵ گیگاوات افزایش می‌دهد. ساخت با دو پیمانکار داخلی انجام می‌شود و بستن مالی در سه‌ماهه دوم پیش‌بینی شده است.\n\nپنل‌های این پروژه دوجهته هستند و از باتری سدیمی استفاده می‌شود. ساخت پس از پایان فصل بارانی در ماه آوریل آغاز می‌شود.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000102"],
+          "1": ["00000000-0000-0000-0000-000000000102"],
+          "2": ["00000000-0000-0000-0000-000000000102"],
+          "3": ["00000000-0000-0000-0000-000000000102"],
+          "4": ["00000000-0000-0000-0000-000000000102"]
+        },
+        "allowedUrls": ["https://grid.example/fa"]
+      },
+      "brief": {
+        "angle": "تأیید اتصال مزرعه خورشیدی ۴۵ گیگاواتی",
+        "audience": "خوانندگان بخش انرژی",
+        "riskClass": 1,
+        "targetLength": 350,
+        "mustCover": ["ظرفیت", "تأمین مالی", "ساخت"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000102"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 1, "claimIds": ["00000000-0000-0000-0000-000000000102"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000102"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000102"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000102"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000102",
+          "bodyText": "سازمان تنظیم مقررات روز دوشنبه اتصال مزرعه خورشیدی را به شبکه سراسری تأیید کرد. این پروژه تا سال ۲۰۳۰ ظرفیت ۴۵ گیگاواتی اضافه می‌کند. قراردادهای EPC با دو پیمانکار داخلی امضا شده و تأمین مالی در سه‌ماهه دوم بسته می‌شود."
+        }
+      ]
+    },
+    {
+      "id": "fa-good-3",
+      "label": "good",
+      "post": {
+        "bodyMd": "> عمر ۵۰۰ چرخه‌ای این ماده دو برابر نسل قبل است.\n> — پژوهش وُلتا (https://volta.example/fa)\n\nپژوهش وُلتا امروز نتیجه آزمایش را منتشر کرد. الکترولیت تازه در دمای ۴۵ درجه و ظرفیت بالای ۹۰ درصد، ۵۰۰ چرخه را تحمل می‌کند. این ماده برای ذخیره‌سازی در مقیاس شبکه ساخته شده است.\n\nتأمین‌کننده پیش از این چنین داده‌ای برای این خط تولید منتشر نکرده بود. آزمایشگاه مستقل در این شیمی منفعتی ندارد و نتیجه قابل تکرار است.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000103"],
+          "2": ["00000000-0000-0000-0000-000000000103"],
+          "3": ["00000000-0000-0000-0000-000000000103"],
+          "4": ["00000000-0000-0000-0000-000000000103"],
+          "5": ["00000000-0000-0000-0000-000000000103"]
+        },
+        "allowedUrls": ["https://volta.example/fa"]
+      },
+      "brief": {
+        "angle": "الکترولیت جدید ۹۰ درصد ظرفیت را پس از ۵۰۰ چرخه حفظ می‌کند",
+        "audience": "محققان باتری و خریداران ذخیره‌سازی شبکه",
+        "riskClass": 1,
+        "targetLength": 400,
+        "mustCover": ["چرخه", "ظرفیت", "آزمایشگاه"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000103"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000103"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000103"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000103"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 5, "claimIds": ["00000000-0000-0000-0000-000000000103"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000103",
+          "bodyText": "پژوهش وُلتا این آزمایش را امروز منتشر کرد. الکترولیت جدید ۵۰۰ چرخه شارژ را در دمای ۴۵ درجه با حفظ ظرفیت بالای ۹۰ درصد تحمل می‌کند. این اولین بار است که تأمین‌کننده داده‌ای بالای ۹۰ درصد برای این خط تولید منتشر می‌کند."
+        }
+      ]
+    },
+    {
+      "id": "fa-flawed-1",
+      "label": "flawed",
+      "flawTypes": ["factual_grounding"],
+      "post": {
+        "bodyMd": "شرکت تولیدکننده ادعا می‌کند محصولش «به‌طور قابل توجهی بهبود یافته» است. در گزارش آمده که این بهبود «معنادار و مهم» است. هیچ طرف سومی این ادعا را تأیید نکرده است.",
+        "claimMap": {},
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "ادعای تولیدکننده درباره بهبود محصول",
+        "audience": "خوانندگان عمومی",
+        "riskClass": 2,
+        "targetLength": 160,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 1,
+        "sentences": [
+          { "index": 0, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false },
+          { "index": 1, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false },
+          { "index": 2, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false }
+        ]
+      },
+      "sources": []
+    },
+    {
+      "id": "fa-flawed-2",
+      "label": "flawed",
+      "flawTypes": ["banned_pattern"],
+      "post": {
+        "bodyMd": "انقلابی. بی‌نظیر. موتور جدید یک ارتقای اساسی برای همه است. هزینه را کاهش می‌دهد، سرعت را بالا می‌برد، کیفیت را بهتر می‌کند. ساده است، پیچیده نیست. هر کسی می‌تواند از آن استفاده کند.\n\nمحصول همین حالا در دسترس است. همین امروز سفارش دهید و تخفیف ویژه بگیرید.",
+        "claimMap": {},
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "رونمایی موتور جدید",
+        "audience": "خوانندگان عمومی",
+        "riskClass": 1,
+        "targetLength": 250,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "sources": []
+    },
+    {
+      "id": "fa-flawed-3",
+      "label": "flawed",
+      "flawTypes": ["quote_budget"],
+      "post": {
+        "bodyMd": "در یادداشت داخلی ادعا شده که سیستم «هزینه مالکیت را حداقل ۳۰ درصد کاهش و کارایی را ۴۰ درصد افزایش می‌دهد». این نتیجه با سرمایه‌گذاران در میان گذاشته شد. <b>این ادعا به‌طور مستقل تأیید نشده است.</b>",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000104"]
+        },
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "افزایش کارایی سیستم",
+        "audience": "سرمایه‌گذاران",
+        "riskClass": 1,
+        "targetLength": 200,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000104"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000104",
+          "bodyText": "در یادداشت داخلی ادعا شده که سیستم هزینه مالکیت را حداقل ۳۰ درصد کاهش و کارایی را ۴۰ درصد افزایش می‌دهد. این نتیجه با سرمایه‌گذاران در میان گذاشته شد."
+        }
+      ],
+      "html": "<p>در یادداشت داخلی ادعا شده که سیستم &ldquo;هزینه مالکیت را حداقل ۳۰ درصد کاهش و کارایی را ۴۰ درصد افزایش می‌دهد&rdquo;. این نتیجه با سرمایه‌گذاران در میان گذاشته شد. <b>این ادعا به‌طور مستقل تأیید نشده است.</b></p>"
+    }
+  ]
+}

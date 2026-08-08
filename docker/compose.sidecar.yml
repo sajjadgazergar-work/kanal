@@ -1,0 +1,47 @@
+# KANAL — optional MTProto sidecar compose override (plan §12.7, §16.3,
+# §18.1). The sidecar collects per-post metrics from the user's own Telegram
+# session. It is a separate image and a separate network policy: no inbound
+# ports and egress restricted to Telegram DC ranges only. Opt-in, default off.
+#
+#   docker compose -f docker/compose.yml -f docker/compose.sidecar.yml up -d
+
+services:
+  sidecar-mtproto:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.sidecar
+    profiles: [sidecar]
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy
+    environment:
+      KANAL_SIDECAR_API_URL: http://api:3001
+      KANAL_SIDECAR_ACCOUNT_FILE: /data/account.json
+      KANAL_SIDECAR_SESSION_FILE: /data/session.session
+    volumes:
+      - sidecar-data:/data
+    # No ports published.
+    # Egress allow-list is enforced at the network layer (see below), not by the
+    # application: the container has no NAT access of its own.
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    networks:
+      # The sidecar talks only to the api on the shared bridge network; no
+      # ports are published, so nothing is reachable inbound from the host.
+      - kanal
+    # Healthcheck requires the sidecar to be reachable — it exposes a tiny
+    # liveness endpoint on a Unix socket inside the container, so use a signal.
+    healthcheck:
+      test: ["CMD-SHELL", "kill -0 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  sidecar-data:

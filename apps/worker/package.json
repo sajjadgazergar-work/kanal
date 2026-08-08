@@ -1,0 +1,39 @@
+{
+  "name": "@kanal/worker",
+  "version": "0.1.0",
+  "description": "KANAL worker: all four worker roles (pipeline, ingest, publish, metrics) in one process; KANAL_WORKER_ROLES selects (plan §12.7).",
+  "license": "AGPL-3.0-or-later",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "test:unit": "vitest run",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kanal/contracts": "workspace:*",
+    "@kanal/core": "workspace:*",
+    "@kanal/db": "workspace:*",
+    "@kanal/adapters-core": "workspace:*",
+    "@kanal/adapters-telegram": "workspace:*",
+    "@kanal/providers": "workspace:*",
+    "@kanal/sources": "workspace:*",
+    "@kanal/safety": "workspace:*",
+    "drizzle-orm": "^0.36.4",
+    "pg": "^8.13.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.9",
+    "eslint": "^9.17.0"
+  }
+}

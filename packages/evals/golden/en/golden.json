@@ -1,0 +1,216 @@
+{
+  "locale": "en",
+  "description": "English golden set — 3 good, 3 flawed posts for judge calibration and deterministic regression (plan §15.2).",
+  "items": [
+    {
+      "id": "en-good-1",
+      "label": "good",
+      "post": {
+        "bodyMd": "> The new controller sustains 1.2 TB/s memory bandwidth at 2 nanometers, cutting power draw by 40 percent versus the prior generation.\n> — Aurora Labs (https://aurora.example/controller)\n\nAurora Labs shipped the controller on Tuesday. The chip targets AI inference racks, and bandwidth doubles for the same channel width. The fabrication process was validated on a public test chip.\n\nPer the datasheet, an independent lab reproduced the numbers: the 1.2 TB/s peak rate and the 40 percent power reduction.\n\nAurora starts shipping in March. Three customers are already sampling the module, and the open datasheet keeps the claims verifiable.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000001"],
+          "2": ["00000000-0000-0000-0000-000000000001"],
+          "3": ["00000000-0000-0000-0000-000000000001"],
+          "4": ["00000000-0000-0000-0000-000000000001"],
+          "5": ["00000000-0000-0000-0000-000000000001"],
+          "6": ["00000000-0000-0000-0000-000000000001"],
+          "7": ["00000000-0000-0000-0000-000000000001"]
+        },
+        "allowedUrls": ["https://aurora.example/controller"]
+      },
+      "brief": {
+        "angle": "New controller doubles memory bandwidth at 2 nm",
+        "audience": "AI engineers and datacenter operators",
+        "riskClass": 1,
+        "targetLength": 640,
+        "mustCover": ["bandwidth", "power", "datasheet"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 5, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 6, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 7, "claimIds": ["00000000-0000-0000-0000-000000000001"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000001",
+          "bodyText": "Aurora Labs today announced a new memory controller built at 2 nanometers. The company says it sustains 1.2 TB/s memory bandwidth and cuts power draw by 40 percent versus the prior generation. The datasheet, published today, lists a 1.2 TB/s peak rate and a 40 percent power reduction. An independent lab ran the benchmark and the results are reproducible. Aurora ships in March and the module is already sampling with three customers."
+        }
+      ]
+    },
+    {
+      "id": "en-good-2",
+      "label": "good",
+      "post": {
+        "bodyMd": "The energy regulator cleared a solar build-out on Tuesday. The project adds 45 gigawatts to the grid by 2030. Two local contractors will handle construction. The financing round closes next quarter.\n\nThe panel field uses bifacial modules and a sodium battery bank. Work begins after the rainy season ends in April.\n\nThe environmental review shrank the plan from 60 gigawatts. Permitting took 14 months. The transmission link was upgraded to carry the load.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000002"],
+          "1": ["00000000-0000-0000-0000-000000000002"],
+          "2": ["00000000-0000-0000-0000-000000000002"],
+          "3": ["00000000-0000-0000-0000-000000000002"],
+          "4": ["00000000-0000-0000-0000-000000000002"],
+          "5": ["00000000-0000-0000-0000-000000000002"],
+          "6": ["00000000-0000-0000-0000-000000000002"],
+          "7": ["00000000-0000-0000-0000-000000000002"],
+          "8": ["00000000-0000-0000-0000-000000000002"]
+        },
+        "allowedUrls": ["https://grid.example/approval"]
+      },
+      "brief": {
+        "angle": "45 GW solar farm wins grid approval",
+        "audience": "energy-sector readers",
+        "riskClass": 1,
+        "targetLength": 500,
+        "mustCover": ["capacity", "financing", "construction"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 1, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 5, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 6, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 7, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 8, "claimIds": ["00000000-0000-0000-0000-000000000002"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000002",
+          "bodyText": "The energy regulator approved the grid connection for a 45 gigawatt solar farm on Tuesday. The project adds capacity by 2030. EPC contracts were signed with two local builders and financing closes in the second quarter. Permitting took 14 months; the original design was scaled back from 60 gigawatts after the environmental review."
+        }
+      ]
+    },
+    {
+      "id": "en-good-3",
+      "label": "good",
+      "post": {
+        "bodyMd": "> The new electrolyte sustains 500 charge cycles at 45 degrees Celsius with capacity retention above 90 percent.\n> — Volta Research (https://volta.example/research)\n\nVolta Research ran a cycling test today. The material is meant for grid-scale storage. It holds its charge twice as long as the old chemistry.\n\nFor this product line, the supplier has never reported retention that high. The independent lab holds no financial stake, and the findings reproduce.",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000003"],
+          "2": ["00000000-0000-0000-0000-000000000003"],
+          "3": ["00000000-0000-0000-0000-000000000003"],
+          "4": ["00000000-0000-0000-0000-000000000003"],
+          "5": ["00000000-0000-0000-0000-000000000003"],
+          "6": ["00000000-0000-0000-0000-000000000003"]
+        },
+        "allowedUrls": ["https://volta.example/research"]
+      },
+      "brief": {
+        "angle": "New electrolyte holds 90% capacity after 500 cycles",
+        "audience": "battery researchers and grid-storage buyers",
+        "riskClass": 1,
+        "targetLength": 520,
+        "mustCover": ["cycles", "capacity", "lab"],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 2, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 3, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 4, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 5, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false },
+          { "index": 6, "claimIds": ["00000000-0000-0000-0000-000000000003"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000003",
+          "bodyText": "Volta Research published a test today. The new electrolyte sustains 500 charge cycles at 45 degrees Celsius with capacity retention above 90 percent. It is designed for grid storage. This is the first time the supplier has published retention data above 90 percent for this product line. The independent lab that ran the test has no financial stake in the chemistry, and the results are reproducible."
+        }
+      ]
+    },
+    {
+      "id": "en-flawed-1",
+      "label": "flawed",
+      "flawTypes": ["factual_grounding"],
+      "post": {
+        "bodyMd": "A new report from the manufacturer claims the company “significantly improved” its product. The report says the improvement is “significant and meaningful.” No third party verified the claim.",
+        "claimMap": {},
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "Manufacturer claims product improvement",
+        "audience": "general readers",
+        "riskClass": 2,
+        "targetLength": 200,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 1,
+        "sentences": [
+          { "index": 0, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false },
+          { "index": 1, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false },
+          { "index": 2, "claimIds": [], "needsCitation": true, "hasCitation": false, "contradiction": false }
+        ]
+      },
+      "sources": []
+    },
+    {
+      "id": "en-flawed-2",
+      "label": "flawed",
+      "flawTypes": ["banned_pattern"],
+      "post": {
+        "bodyMd": "Breakthrough. Game changer. The new engine is a major upgrade for everyone. It is fast, scalable, and secure. It cuts cost, boosts speed, and improves quality. It's not complicated, it's simple. Anyone can adopt it. The world's best teams are already using it.\n\nThe product is available now. Order today and unlock exclusive savings.",
+        "claimMap": {},
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "New engine launch",
+        "audience": "general readers",
+        "riskClass": 1,
+        "targetLength": 300,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "sources": []
+    },
+    {
+      "id": "en-flawed-3",
+      "label": "flawed",
+      "flawTypes": ["quote_budget"],
+      "post": {
+        "bodyMd": "The memo claims the system “reduces total cost of ownership by at least 30 percent while improving throughput by 40 percent through a new caching layer and a rewritten scheduler.” The company shared this result with investors. <b>The claim was not independently verified.</b>",
+        "claimMap": {
+          "0": ["00000000-0000-0000-0000-000000000004"]
+        },
+        "allowedUrls": []
+      },
+      "brief": {
+        "angle": "System improves throughput",
+        "audience": "investors",
+        "riskClass": 1,
+        "targetLength": 280,
+        "mustCover": [],
+        "mustAvoid": []
+      },
+      "coverage": {
+        "uncitedRatio": 0,
+        "sentences": [
+          { "index": 0, "claimIds": ["00000000-0000-0000-0000-000000000004"], "needsCitation": true, "hasCitation": true, "contradiction": false }
+        ]
+      },
+      "sources": [
+        {
+          "sourceItemId": "00000000-0000-0000-0000-000000000004",
+          "bodyText": "An internal memo describes a new caching layer and a rewritten scheduler. The system reduces total cost of ownership by at least 30 percent while improving throughput by 40 percent through a new caching layer and a rewritten scheduler."
+        }
+      ],
+      "html": "<p>The memo claims the system &ldquo;reduces total cost of ownership by at least 30 percent while improving throughput by 40 percent through a new caching layer and a rewritten scheduler.&rdquo; The company shared this result with investors. <b>The claim was not independently verified.</b></p>"
+    }
+  ]
+}

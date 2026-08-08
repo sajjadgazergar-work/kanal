@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kanal.dev/schemas/agent-manifest.v1.json",
+  "title": "KANAL Agent Manifest v1",
+  "description": "A declarative agent manifest. Validated before loading; a manifest that fails any check does not load (plan §7.2, §7.3).",
+  "type": "object",
+  "required": ["apiVersion", "kind", "coreApi", "metadata", "spec"],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": { "const": "kanal.dev/v1" },
+    "kind": { "const": "Agent" },
+    "coreApi": { "type": "string", "description": "semver range, e.g. ^1.2" },
+    "metadata": {
+      "type": "object",
+      "required": ["id", "version", "team", "displayName"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "team": { "type": "string" },
+        "displayName": {
+          "type": "object",
+          "properties": {
+            "en": { "type": "string" },
+            "fa": { "type": "string" }
+          },
+          "required": ["en"]
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["zone", "stageBinding", "inputContract", "outputContract", "tools"],
+      "properties": {
+        "zone": { "enum": ["quarantine", "trusted", "deterministic"] },
+        "stageBinding": { "type": "string" },
+        "inputContract": { "type": "string" },
+        "outputContract": { "type": "string" },
+        "tools": {
+          "type": "array",
+          "items": { "enum": [
+            "source.read_snapshot", "source.search_index", "channel.read_recent",
+            "metrics.read_summary", "voice.read_pack", "draft.write", "draft.annotate",
+            "schedule.propose", "approval.request", "media.generate_image", "web.fetch_allowlisted"
+          ] }
+        },
+        "promptPack": {
+          "type": "object",
+          "properties": {
+            "ref": { "type": "string" },
+            "version": { "type": "string" },
+            "template": { "type": "string" }
+          },
+          "required": ["ref", "version", "template"]
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "tier": { "enum": ["S", "M", "L", "V", "local"] },
+            "tierOverrideAllowed": { "type": "boolean", "default": true },
+            "temperature": { "type": "number", "minimum": 0, "maximum": 2, "default": 0.7 },
+            "maxOutputTokens": { "type": "integer", "minimum": 1, "default": 1600 },
+            "structuredOutput": { "enum": ["required", "preferred", "none"], "default": "preferred" }
+          }
+        },
+        "budget": {
+          "type": "object",
+          "properties": {
+            "maxUsd": { "type": "number", "minimum": 0, "default": 0.06 },
+            "maxInputTokens": { "type": "integer", "minimum": 1, "default": 14000 },
+            "maxWallMs": { "type": "integer", "minimum": 1, "default": 45000 }
+          }
+        },
+        "retry": {
+          "type": "object",
+          "properties": {
+            "attempts": { "type": "integer", "minimum": 0, "maximum": 5, "default": 2 },
+            "on": { "type": "array", "items": { "enum": ["schema_invalid", "rate_limited", "provider_5xx", "timeout"] } },
+            "backoff": { "enum": ["exponential_jitter", "linear", "none"], "default": "exponential_jitter" }
+          }
+        },
+        "fanout": {
+          "type": "object",
+          "properties": {
+            "variants": { "type": "integer", "minimum": 1, "maximum": 8, "default": 1 }
+          }
+        },
+        "escalation": {
+          "type": "object",
+          "properties": {
+            "onExhausted": { "enum": ["escalate_to_human", "downtier_and_retry", "skip_stage"], "default": "escalate_to_human" }
+          }
+        }
+      }
+    }
+  }
+}

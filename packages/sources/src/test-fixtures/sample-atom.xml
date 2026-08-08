@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>KANAL Atom Fixture</title>
+  <link href="https://example.test/atom"/>
+  <updated>2026-08-07T08:00:00Z</updated>
+  <entry>
+    <title>An atom entry about databases</title>
+    <link rel="alternate" href="https://example.test/atom/db-entry"/>
+    <id>tag:example.test,2026:db-entry</id>
+    <published>2026-08-07T07:30:00Z</published>
+    <updated>2026-08-07T07:45:00Z</updated>
+    <author><name>Atom Author</name></author>
+    <summary>Short summary of the db entry.</summary>
+    <content type="html">&lt;p&gt;Full body of the database entry.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Second atom entry</title>
+    <link href="https://example.test/atom/second"/>
+    <id>tag:example.test,2026:second</id>
+    <published>2026-08-06T12:00:00Z</published>
+    <summary>Another summary.</summary>
+  </entry>
+</feed>

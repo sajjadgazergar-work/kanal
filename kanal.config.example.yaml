@@ -1,0 +1,57 @@
+# KANAL example configuration.
+# Copy to kanal.config.yaml before first run. Secrets are never set here —
+# they live in the environment (KANAL_MASTER_KEY, KANAL_SESSION_SECRET) or in the
+# encrypted `provider.key_ciphertext` column.
+
+org:
+  name: My Channel Agency
+  ui_locale: en          # en | fa
+  timezone: UTC          # IANA
+  calendar_system: gregory   # gregory | persian
+  numeral_system: latn       # latn | arabext
+  budget_month_usd: 50.00
+
+server:
+  host: 127.0.0.1        # Default denies remote access. See plan §16.3.
+  port: 3001
+
+postgres:
+  url: postgres://kanal:kanal@localhost:5432/kanal
+
+redis:
+  url: redis://localhost:6379
+
+telemetry:
+  trace_content: redacted   # redacted (default) | full | off. Plan §13.2 / Q11.
+
+ingest:
+  vector: true             # KANAL_VECTOR=off mode supported. Plan §8.2.
+  global_concurrency: 8
+  per_host_concurrency: 2
+  robots_cache_hours: 24
+
+providers:
+  # Example gateway configuration. Plan §11.8.
+  # - id: openrouter
+  #   label: OpenRouter (via proxy)
+  #   dialect: openai_compatible
+  #   baseUrl: https://openrouter.ai/api
+  #   authKind: bearer
+  #   proxyUrl: socks5h://127.0.0.1:1080
+  #   extraHeaders:
+  #     HTTP-Referer: https://mykanal.example
+  #     X-Title: KANAL
+  #   timeoutMs: 60000
+  #   maxConcurrent: 4
+
+egress:
+  mode: allow             # allow | deny (air-gapped). Plan §11.8.
+  allow_list: [localhost, 10.0.0.0/8, ollama]
+
+worker:
+  roles: all              # all | pipeline,ingest,publish,metrics
+  pipeline_concurrency: 4
+  ingest_concurrency: 8
+
+publish:
+  enabled: true           # KANAL_PUBLISH=off refuses to start the publisher.

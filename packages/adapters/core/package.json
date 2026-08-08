@@ -1,0 +1,30 @@
+{
+  "name": "@kanal/adapters-core",
+  "version": "0.1.0",
+  "description": "KANAL platform abstraction layer: CapabilityDescriptor, PlatformAdapter interface, rate limiting, conformance kit (plan §10.2). Apache-2.0 (plan §19.1 carve-out).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test:unit": "vitest run",
+    "test": "vitest run",
+    "test:conformance": "vitest run src/__tests__/conformance.test.ts"
+  },
+  "dependencies": {
+    "@kanal/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

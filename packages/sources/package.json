@@ -1,0 +1,36 @@
+{
+  "name": "@kanal/sources",
+  "version": "0.1.0",
+  "description": "KANAL source system: connectors, fetch discipline, canonicalization, dedup, freshness, trust scoring (plan §8).",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test:unit": "vitest run",
+    "test": "vitest run",
+    "test:vectoroff": "cross-env KANAL_VECTOR=off vitest run src/__tests__/vector-off.test.ts"
+  },
+  "dependencies": {
+    "@kanal/contracts": "workspace:*",
+    "@mozilla/readability": "^0.5.0",
+    "cheerio": "^1.0.0",
+    "fast-xml-parser": "^4.5.0",
+    "linkedom": "^0.18.5",
+    "undici": "^6.21.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

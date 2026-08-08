@@ -1,0 +1,38 @@
+# Build context hygiene. Without this file the whole repo — including every
+# workspace's node_modules, build output, and the secrets in docker/.env — is
+# sent to the Docker daemon. pnpm's symlinked node_modules breaks the tar on
+# Windows ("unknown file mode"), and docker/.env must never enter an image.
+
+# VCS
+.git/
+.gitignore
+.github/
+
+# Dependencies — never ship node_modules in the context.
+**/node_modules/
+node_modules/
+
+# Build output.
+**/dist/
+**/.next/
+**/coverage/
+**/*.tsbuildinfo
+
+# Secrets and local config. docker/.env contains KANAL_API_KEY etc.; the
+# compose file injects it via env_file, the image never needs it.
+docker/.env
+docker/.env.*
+kanal.config.yaml
+apps/*/.env.local
+apps/*/.env.*.local
+
+# Editor / OS / tooling.
+.claude/
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db
+
+# Docs and notes are unnecessary in the runtime image context.
+*.md

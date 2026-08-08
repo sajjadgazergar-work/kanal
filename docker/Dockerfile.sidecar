@@ -1,0 +1,10 @@
+# KANAL — Dockerfile for the optional MTProto sidecar (plan §18.1).
+# Separate image so it can carry a separate network policy and dependency set.
+FROM node:22-alpine AS sidecar
+ENV NODE_ENV=production
+WORKDIR /app
+RUN addgroup -S kanal && adduser -S -G kanal -u 10001 kanal
+COPY apps/sidecar-mtproto/package.json ./
+COPY apps/sidecar-mtproto/dist ./dist
+USER kanal
+ENTRYPOINT ["node", "dist/index.js"]

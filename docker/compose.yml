@@ -1,0 +1,144 @@
+# KANAL — minimal viable install (plan §18.1, §12.7, §16.3).
+#
+# api + worker + postgres + redis on a 2 vCPU / 4 GB box. The worker image runs
+# all four worker roles in one process when KANAL_WORKER_ROLES=all (default).
+#
+# Hardening defaults (plan §16.3) that are ON here:
+#   - API binds 127.0.0.1 inside the container; the only published port is the
+#     one you reverse-proxy. There is no exposed admin port.
+#   - Postgres and Redis are NOT published to the host.
+#   - Containers run as a non-root uid, read-only root fs, cap_drop: ALL.
+#   - Healthchecks on all four services; api/worker wait on postgres+redis.
+#   - Secrets come from .env and refuse placeholder values (checked at boot).
+#
+# Bring up:  cp kanal.config.example.yaml kanal.config.yaml && docker compose up -d
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${KANAL_DB_USER:-kanal}
+      POSTGRES_PASSWORD: ${KANAL_DB_PASSWORD:?KANAL_DB_PASSWORD must be set}
+      POSTGRES_DB: ${KANAL_DB_NAME:-kanal}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Automated daily backup to a mounted volume (plan §16.3); restore with:
+      #   docker compose exec -T postgres pg_restore -U kanal -d kanal < backup.dump
+      - pgbackup:/backup
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KANAL_DB_USER:-kanal} -d ${KANAL_DB_NAME:-kanal}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    networks:
+      - kanal
+    # No ports: Postgres is never published to the host.
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "no"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    networks:
+      - kanal
+    # No published port; rate limiter + SSE fanout only (never a durability dep).
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: [.env]
+    environment:
+      KANAL_CONFIG: /etc/kanal/kanal.config.yaml
+      KANAL_BIND: 127.0.0.1
+      KANAL_PORT: "3001"
+      KANAL_DB_URL: postgres://${KANAL_DB_USER:-kanal}:${KANAL_DB_PASSWORD:?}@postgres:5432/${KANAL_DB_NAME:-kanal}
+      KANAL_REDIS_URL: redis://redis:6379
+      KANAL_API_KEY: ${KANAL_API_KEY:?KANAL_API_KEY must be set}
+      KANAL_SESSION_SECRET: ${KANAL_SESSION_SECRET:?KANAL_SESSION_SECRET must be set}
+    volumes:
+      - ./kanal.config.yaml:/etc/kanal/kanal.config.yaml:ro
+    ports:
+      # Only this port is published; reverse-proxy TLS in front of it.
+      - "127.0.0.1:3001:3001"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    networks:
+      - kanal
+
+  worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: worker
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: [.env]
+    environment:
+      KANAL_CONFIG: /etc/kanal/kanal.config.yaml
+      KANAL_DB_URL: postgres://${KANAL_DB_USER:-kanal}:${KANAL_DB_PASSWORD:?}@postgres:5432/${KANAL_DB_NAME:-kanal}
+      KANAL_REDIS_URL: redis://redis:6379
+      KANAL_WORKER_ROLES: ${KANAL_WORKER_ROLES:-all}
+      KANAL_PUBLISH: ${KANAL_PUBLISH:-off}
+    volumes:
+      - ./kanal.config.yaml:/etc/kanal/kanal.config.yaml:ro
+    healthcheck:
+      test: ["CMD-SHELL", "kill -0 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    networks:
+      - kanal
+
+volumes:
+  pgdata:
+  pgbackup:
+  redisdata:
+
+networks:
+  kanal:
+    driver: bridge

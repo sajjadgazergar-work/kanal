@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.turbo/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+!.env.example
+.pnpm-store/
+pgdata/
+redisdata/
+*.log
+.DS_Store
+kanal.db

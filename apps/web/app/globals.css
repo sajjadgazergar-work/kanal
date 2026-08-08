@@ -1,0 +1,267 @@
+/* KANAL dashboard base styles (plan §14.4, docs/ui-rules.md).
+   One typeface, a fixed size scale, and a neutral palette. No gradients,
+   no decorative chrome. RTL is a separate theme pass (W4). */
+
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f6f7f8;
+  --fg: #1a1c1e;
+  --fg-muted: #5b6168;
+  --border: #d8dbe0;
+  --accent: #2052a3;
+  --accent-fg: #ffffff;
+  --ok: #1a7f37;
+  --warn: #9a6700;
+  --danger: #b42318;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  padding: 0 var(--sp-4);
+  height: 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: var(--sp-4);
+}
+
+.site-header nav a {
+  color: var(--fg-muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: var(--sp-1) 0;
+}
+
+.site-header nav a:hover {
+  color: var(--fg);
+}
+
+.site-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--sp-6) var(--sp-4);
+}
+
+h1 {
+  font-size: 22px;
+  margin: 0 0 var(--sp-4);
+}
+
+h2 {
+  font-size: 17px;
+  margin: var(--sp-6) 0 var(--sp-3);
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+}
+
+.muted {
+  color: var(--fg-muted);
+  font-size: 13px;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: var(--bg-subtle);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.row {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.row > * {
+  margin: 0;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+}
+
+.badge[data-state='running'],
+.badge[data-state='drafting'],
+.badge[data-state='review_pending'] {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.badge[data-state='published'],
+.badge[data-state='done'] {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.badge[data-state='cancelled'],
+.badge[data-state='blocked'],
+.badge[data-state='failed'] {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+table.data th,
+table.data td {
+  text-align: left;
+  padding: var(--sp-2) var(--sp-3);
+  border-bottom: 1px solid var(--border);
+}
+
+table.data th {
+  color: var(--fg-muted);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+button.btn,
+a.btn {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button.btn:hover,
+a.btn:hover {
+  background: var(--bg-subtle);
+}
+
+button.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+button.btn-primary:hover {
+  background: var(--accent);
+  filter: brightness(1.08);
+}
+
+button.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+input[type='text'],
+input[type='number'],
+select,
+textarea {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font: inherit;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--fg-muted);
+  margin-bottom: var(--sp-1);
+}
+
+.field {
+  margin-bottom: var(--sp-3);
+}
+
+.banner-error {
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  border-radius: 6px;
+  padding: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.banner-error .code {
+  background: rgba(180, 35, 24, 0.08);
+}
+
+ul.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.list li {
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+ul.list li:last-child {
+  border-bottom: none;
+}
+
+.skeleton {
+  background: var(--bg-subtle);
+  border-radius: 4px;
+  height: 14px;
+}

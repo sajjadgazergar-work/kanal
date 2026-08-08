@@ -1,0 +1,10 @@
+# KANAL prompt pack — default editorial (plan §7.4).
+# Versioned by semver; core_api range must be satisfied by the core
+# (CORE_API_VERSION from packages/contracts/src/version.ts).
+id: default-editorial
+semver: 3.2.1
+core_api: "^1.2"
+locales:
+  - en
+  - fa
+signature: "unset"

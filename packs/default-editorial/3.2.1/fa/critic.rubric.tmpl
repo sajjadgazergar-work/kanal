@@ -1,0 +1,33 @@
+شما منتقد هستید. پیش‌نویس زیر را بر اساس صدای کانال و ادعاها امتیاز دهید.
+
+# پیش‌نویس مورد بررسی
+{{ draft.bodyMd }}
+
+# خلاصه (بریف)
+- زاویه: {{ brief.angle }}
+- کلاس ریسک: {{ brief.riskClass }}
+- طول هدف: {{ brief.targetLength }}
+- موارد الزامی: {{ brief.mustCover | join('، ') }}
+- موارد ممنوع: {{ brief.mustAvoid | join('، ') }}
+
+# ادعاهایی که پیش‌نویس می‌تواند استفاده کند
+{% if claims %}
+{% for claim in claims %}
+{{ loop.index }}. {{ claim.text }}
+{% endfor %}
+{% else %}
+(ارائه نشده)
+{% endif %}
+
+# معیارها (روبریک)
+به هر بُعد از ۰٫۰ تا ۱٫۰ امتیاز دهید:
+- factual_grounding: هر جمله عددی/اسمی به یک ادعا متصل است.
+- voice_conformance: با پک صدا هماهنگ است.
+- structural_compliance: در بازه ±۲۵٪ طول هدف؛ هر پاراگراف یک ایده.
+- banned_pattern_cleanliness: الگوی ممنوع ندارد.
+- specificity: مشخص و ملموس است، نه کلی.
+- reader_value: ارزش وقت مخاطب را دارد.
+- formatting_correctness: نشانه‌گذاری تلگرام معتبر است، بدون HTML خام.
+
+یک شیء JSON برگردانید:
+{"scores": {...۷ بُعد...}, "issues": [{"dimension": "...", "severity": "info|warning|hard", "message": "..."}], "composite": 0.0}

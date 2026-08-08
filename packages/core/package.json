@@ -1,0 +1,36 @@
+{
+  "name": "@kanal/core",
+  "version": "0.1.0",
+  "description": "KANAL core: runtime, stages, capability registry, budget guard, policy engine.",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test:unit": "vitest run",
+    "test": "vitest run",
+    "doctor": "node dist/cli/doctor.js"
+  },
+  "dependencies": {
+    "@kanal/contracts": "workspace:*",
+    "@kanal/db": "workspace:*",
+    "drizzle-orm": "^0.36.4",
+    "zod": "^3.23.8",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "eslint": "^9.17.0",
+    "@types/pg": "^8.11.10"
+  }
+}

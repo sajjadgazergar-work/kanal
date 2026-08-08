@@ -1,0 +1,31 @@
+{
+  "name": "@kanal/adapters-telegram",
+  "version": "0.1.0",
+  "description": "KANAL Telegram adapter: HTML allow-list markup, 4096/1024 splitter, idempotent publish, token-bucket rate limiting (plan §10.3–§10.6).",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test:unit": "vitest run",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kanal/adapters-core": "workspace:*",
+    "@kanal/contracts": "workspace:*",
+    "undici": "^6.19.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

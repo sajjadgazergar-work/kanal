@@ -1,0 +1,72 @@
+# KANAL — optional GPU compose override: adds vLLM or Ollama as a local
+# OpenAI-compatible endpoint for fully-air-gapped model inference (plan §11.8,
+# §18.1). Usage:
+#
+#   docker compose -f docker/compose.yml -f docker/compose.gpu.yml up -d
+#
+# Then point a provider at http://ollama:11434/v1 or http://vllm:8000/v1 in
+# kanal.config.yaml and set `egress.mode: deny` for a true air-gapped install.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    profiles: [gpu-ollama]
+    restart: unless-stopped
+    volumes:
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    networks:
+      - kanal
+
+  vllm:
+    image: vllm/vllm-openai:latest
+    profiles: [gpu-vllm]
+    restart: unless-stopped
+    command:
+      - --model
+      - ${VLLM_MODEL:-meta-llama/Llama-3.1-8B-Instruct}
+      - --served-model-name
+      - ${VLLM_SERVED_NAME:-local-model}
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    volumes:
+      - vllm-cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8000/health || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    networks:
+      - kanal
+
+volumes:
+  ollama:
+  vllm-cache:

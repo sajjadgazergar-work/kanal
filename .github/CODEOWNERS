@@ -1,0 +1,9 @@
+# Default: core maintainers review everything.
+*       @kanal-core-maintainers
+
+# Area maintainers get merge rights in their directory (plan §19.3).
+# Replace with real usernames when maintainers exist.
+packages/adapters/        @kanal-adapters-maintainers
+packages/i18n/            @kanal-i18n-maintainers
+packs/                    @kanal-packs-maintainers
+docs/i18n/                @kanal-i18n-maintainers

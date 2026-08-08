@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>KANAL Test Feed</title>
+    <link>https://example.test/</link>
+    <description>Fixture feed for unit tests — never fetched over the network.</description>
+    <item>
+      <title>OpenAI unveils new reasoning model</title>
+      <link>https://example.test/news/openai-reasoning-model</link>
+      <guid>https://example.test/news/openai-reasoning-model</guid>
+      <pubDate>Wed, 06 Aug 2026 10:00:00 GMT</pubDate>
+      <dc:creator>Test Author</dc:creator>
+      <description><![CDATA[OpenAI announced a new reasoning model today. It is fast and cheap.]]></description>
+      <content:encoded><![CDATA[<p>OpenAI announced a new reasoning model today. It is fast and cheap.</p><p>The model beats prior benchmarks on math and coding.</p>]]></content:encoded>
+    </item>
+    <item>
+      <title>Postgres 17 released</title>
+      <link>https://example.test/news/postgres-17</link>
+      <guid>https://example.test/news/postgres-17</guid>
+      <pubDate>Tue, 05 Aug 2026 14:30:00 GMT</pubDate>
+      <description>Postgres 17 ships with performance improvements and new vacuum modes.</description>
+    </item>
+    <item>
+      <title>Zero-width space payload</title>
+      <link>https://example.test/news/zwsp</link>
+      <pubDate>Mon, 04 Aug 2026 09:00:00 GMT</pubDate>
+      <description>This text has a &#x200B;zero-width space&#x200B; in it, plus a soft hyphen&#xAD;.</description>
+    </item>
+  </channel>
+</rss>
